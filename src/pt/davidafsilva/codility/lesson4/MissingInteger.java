@@ -1,5 +1,7 @@
 package pt.davidafsilva.codility.lesson4;
 
+import java.util.BitSet;
+
 /**
  * @author david
  */
@@ -11,27 +13,22 @@ public class MissingInteger {
    * @param args the command line arguments
    */
   public static void main(final String[] args) {
-    System.out.println(new Solution().solution(new int[]{-1, Integer.MAX_VALUE}));
+    System.out.println(new Solution().solution(new int[]{1,3,6,4,1,2}));
   }
 
   static class Solution {
 
-    // TODO: improve this solution...
     int solution(int[] A) {
-      java.util.Arrays.sort(A);
-      int last = Integer.MIN_VALUE;
-      for (int i = 0; i < A.length; i++) {
-        if ((i == 0 || (i>0 && last < 0)) && A[i] > 1) {
-          return 1;
+      final BitSet bits = new BitSet(A.length);
+      for (int num : A) {
+        if (num <= 0 || num > bits.size()) {
+          continue;
         }
-
-        if (i > 0 && A[i] > 0 && last >= 0 && A[i] - last > 1) {
-          return A[i - 1] + 1;
-        }
-
-        last = A[i];
+        bits.set(num - 1);
       }
-      return last <= 0 ? 1 : last + 1;
+
+      final int missing = bits.nextClearBit(0);
+      return missing == -1 ? A.length + 1 : missing + 1;
     }
   }
 }

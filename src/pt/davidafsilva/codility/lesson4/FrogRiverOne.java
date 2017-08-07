@@ -17,16 +17,19 @@ public class FrogRiverOne {
   static class Solution {
 
     int solution(int X, int[] A) {
-      int added = 0;
-      final boolean[] jumps = new boolean[X];
+      int total = 0;
+      boolean[] available = new boolean[X];
       for (int i = 0; i < A.length; i++) {
-        int idx = A[i] - 1;
-        if (!jumps[idx]) {
-          added++;
-          jumps[idx] = true;
+        final int leaf = A[i];
+        if (leaf <= X && !available[leaf-1]) {
+          available[leaf-1] = true;
+          total++;
+          if (total == X) {
+            return i;
+          }
         }
-        if (added == X) return i;
       }
+
       return -1;
     }
   }

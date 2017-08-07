@@ -19,14 +19,16 @@ public class CyclicRotation {
   static class Solution {
 
     public int[] solution(int[] A, int K) {
-      if (K == 0 || A.length == 0 || K % A.length == 0) {
-        return A;
-      }
-      final int[] B = new int[A.length];
-      for (int i = 0; i < A.length; i++) {
-        B[(i + K) % A.length] = A[i];
-      }
-      return B;
+      final int rotations = K == 0 ? 0 : K % A.length;
+      if (rotations == 0) return A;
+      for (int i = 0; i < rotations; i++) swap(A, i, (i + rotations) % A.length);
+      return A;
+    }
+
+    private void swap(final int[] A, final int i1, final int i2) {
+      final int tmp = A[i1];
+      A[i1] = A[i2];
+      A[i2] = tmp;
     }
   }
 }

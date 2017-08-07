@@ -13,7 +13,7 @@ public class MaxCounters {
    * @param args the command line arguments
    */
   public static void main(final String[] args) {
-    System.out.println(Arrays.toString(new Solution().solution(5, new int[]{1,1,6,1,3,3,3})));
+    System.out.println(Arrays.toString(new Solution().solution(5, new int[]{3, 4, 4, 6, 1, 4, 4})));
   }
 
   static class Solution {
@@ -25,7 +25,7 @@ public class MaxCounters {
       // O(n)
       for (int value : A) {
         int idx = value - 1;
-        if (value == N + 1) {
+        if (idx == N) {
           lastMax = max;
           continue;
         }

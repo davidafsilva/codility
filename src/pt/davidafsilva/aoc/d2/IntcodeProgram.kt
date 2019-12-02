@@ -5,19 +5,36 @@ object IntcodeProgram {
     private const val HALT_CODE = 99
     private const val SUM_CODE = 1
     private const val TIMES_CODE = 2
+    private const val TARGET_VALUE = 19_690_720
 
     fun run(): Int {
-        val codes = javaClass.getResourceAsStream("input")
-            .use { stream ->
-                stream.bufferedReader()
-                    .readLine()
-                    .splitToSequence(",")
-                    .map { it.toInt() }
-                    .toMutableList()
+        val originalCodes = loadCodes()
+
+        for (noun in 0..99) {
+            for (verb in 0..99) {
+                val codes = originalCodes.toMutableList()
+                codes[1] = noun
+                codes[2] = verb
+                runCodes(codes)
+
+                val code = codes.getOrNull(0) ?: 0
+                if (code == TARGET_VALUE) {
+                    return 100 * noun + verb
+                }
             }
-        runCodes(codes)
-        return codes.getOrNull(0) ?: 0
+        }
+
+        return -1;
     }
+
+    private fun loadCodes(): List<Int> = javaClass.getResourceAsStream("input")
+        .use { stream ->
+            stream.bufferedReader()
+                .readLine()
+                .splitToSequence(",")
+                .map { it.toInt() }
+                .toList()
+        }
 
     private fun runCodes(codes: MutableList<Int>) {
         (0..(codes.size - 3)).step(4).forEach { idx ->

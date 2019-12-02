@@ -36,15 +36,13 @@ object IntcodeProgram {
         set(1, noun)
         set(2, verb)
 
-        IntRange(0, size - 3)
-            .step(4)
-            .forEach { idx ->
-                when (get(idx)) {
-                    HALT_CODE -> return this@execute
-                    SUM_CODE -> executeOperation(idx, Int::plus)
-                    TIMES_CODE -> executeOperation(idx, Int::times)
-                }
+        IntRange(0, size - 3).step(4).forEach { idx ->
+            when (get(idx)) {
+                HALT_CODE -> return this@execute
+                SUM_CODE -> executeOperation(idx, Int::plus)
+                TIMES_CODE -> executeOperation(idx, Int::times)
             }
+        }
     }
 
     private fun Instructions.executeOperation(instructionIndex: Int, op: (Int, Int) -> Int) {

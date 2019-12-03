@@ -1,5 +1,7 @@
 package pt.davidafsilva.aoc.d2
 
+import pt.davidafsilva.aoc.loadInput
+
 private typealias Instructions = MutableList<Int>
 
 object IntcodeProgram {
@@ -10,7 +12,12 @@ object IntcodeProgram {
     private const val TARGET_VALUE = 19_690_720
 
     fun run(): Int {
-        val instructions = loadInstructions()
+        val instructions = javaClass.loadInput {
+            it.readLine()
+                .splitToSequence(",")
+                .map { it.toInt() }
+                .toMutableList()
+        }
 
         for (noun in 0..99) {
             for (verb in 0..99) {
@@ -22,14 +29,6 @@ object IntcodeProgram {
         }
 
         return -1;
-    }
-
-    private fun loadInstructions(): Instructions = javaClass.getResourceAsStream("input").use { stream ->
-        stream.bufferedReader()
-            .readLine()
-            .splitToSequence(",")
-            .map { it.toInt() }
-            .toMutableList()
     }
 
     private fun Instructions.execute(noun: Int, verb: Int) = apply {

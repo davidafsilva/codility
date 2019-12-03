@@ -1,14 +1,14 @@
 package pt.davidafsilva.aoc.d1
 
+import pt.davidafsilva.aoc.loadInput
+
 private object FuelRequirements {
 
-    fun compute(): Int = javaClass.getResourceAsStream("input")
-        .use { stream ->
-            stream.bufferedReader()
-                .lineSequence()
-                .map { mass -> computeFuelForMass(mass.toInt()) }
-                .sum()
-        }
+    fun compute(): Int = javaClass.loadInput {
+        it.lineSequence()
+            .map { mass -> computeFuelForMass(mass.toInt()) }
+            .sum()
+    }
 
     private fun computeFuelForMass(mass: Int): Int {
         val fuel = mass / 3 - 2

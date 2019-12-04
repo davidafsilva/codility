@@ -47,11 +47,12 @@ private object ManhattanDistance {
     }
 
     private fun interceptionPoints(l1: Line, l2: Line): Collection<Point> = when {
+        (l1.a == Point.ZERO && l2.a == Point.ZERO) -> emptyList()
         !Line2D.linesIntersect(
             l1.a.x.toDouble(), l1.a.y.toDouble(), l1.z.x.toDouble(), l1.z.y.toDouble(),
             l2.a.x.toDouble(), l2.a.y.toDouble(), l2.z.x.toDouble(), l2.z.y.toDouble()
         ) -> emptyList()
-        else -> l1.path.intersect(l2.path).minus(Point.ZERO)
+        else -> l1.path.intersect(l2.path)
     }
 
     private fun BufferedReader.readCoordinates(): List<Line> = readLine()
